@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,22 +23,22 @@ public class GuestbookController {
 	private GuestbookService guestbookService;
 
 	@RequestMapping("/guestbook")
-	public String list(HttpServletRequest request) {
+	public String list(Model model) {
 		List<GuestbookVo> list = guestbookService.getList();
-		request.setAttribute("list", list);
+		model.addAttribute("list", list);
 		return "guestbook/list";
 	}
 
 	@RequestMapping("/guestbook/add")
-	public String add(HttpServletRequest request, @ModelAttribute GuestbookVo guestbookVo) {
+	public String add(@ModelAttribute GuestbookVo guestbookVo) {
 		boolean result = guestbookService.add(guestbookVo);
 		// 오류페이지 해줘야하나?흠..
 		return "redirect:/guestbook";
 	}
 
 	@RequestMapping(value = "/guestbook/delete/{no}", method = RequestMethod.GET)
-	public String delete(@PathVariable(value = "no") long no, HttpServletRequest request) {
-		request.setAttribute("no", no);
+	public String delete(@PathVariable(value = "no") long no, Model model) {
+		model.addAttribute("no", no);
 		return "guestbook/deleteform";
 	}
 
