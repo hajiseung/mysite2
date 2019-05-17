@@ -21,14 +21,17 @@
 	<context:annotation-config />
 	<!-- Controller Scanning 하는 base Package 지정 -->
 	<context:component-scan
-		base-package="com.cafe24.mysite.controller" />
+		base-package="com.cafe24.mysite.controller,com.cafe24.mysite.exception" />
 
 	<!-- 3. ViewResolver 설정  -->
-	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
 		<property name="prefix" value="/WEB-INF/views/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
+	
 
 
 </beans>

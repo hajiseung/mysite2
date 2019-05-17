@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="user">
+
+	<insert id="insert" parameterType="com.cafe24.mysite.vo.UserVo">
+		<![CDATA[
+			insert into user 
+			values(null,#{name },#{email },#{password },#{gender },now())
+		]]>
+		<!-- 넘어오는 uservo에 no를 셋팅해준다. -->
+		<selectKey keyProperty="no" resultType="long" order="AFTER">
+		<![CDATA[
+			select last_insert_id()		
+		]]>
+		</selectKey>
+	</insert>
+
+	<select id="getByEmailAndPassword" parameterType="map"
+		resultType="uservo">
+		<![CDATA[
+			select no, name, email 
+			from user 
+			where email=#{email } and password=#{password }
+		]]>
+	</select>
+
+	<select id="getByNo" parameterType="long" resultType="uservo">
+		<![CDATA[
+			select name,email,password,gender 
+			from user 
+			where no=#{no}
+		]]>
+	</select>
+
+	<update id="update" parameterType="uservo">
+		<![CDATA[
+			update user 
+			set name=#{name },
+			]]>
+		<if test="password != ''">
+			password=#{password },
+		</if>	
+			<![CDATA[
+			 gender=#{gender} 
+			where no=#{no}
+		]]>
+	</update>
+</mapper>
