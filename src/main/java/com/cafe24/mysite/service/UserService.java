@@ -28,4 +28,10 @@ public class UserService {
 		return userDao.update(userVo);
 	}
 
+	public boolean exitEmail(String email) {
+		UserVo userVo = userDao.get(email);
+
+		return userVo != null;
+	}
+
 }

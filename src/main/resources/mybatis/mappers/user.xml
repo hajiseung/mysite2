@@ -46,4 +46,12 @@
 			where no=#{no}
 		]]>
 	</update>
+	
+	<select id="getByEmail" parameterType="string" resultType="uservo">
+		<![CDATA[
+			elect name,email,password,gender 
+			from user 
+			where email=#{email}
+		]]>
+	</select>
 </mapper>

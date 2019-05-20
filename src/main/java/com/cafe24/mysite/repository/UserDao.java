@@ -85,7 +85,14 @@ public class UserDao {
 		 * 
 		 * return result;
 		 */}
-
+	public UserVo get(String email) throws UserDaoException {
+		Map<String, String> map = new HashMap<>();
+		map.put("email", email);
+		UserVo userVo = sqlsession.selectOne("user.getByEmail", map);
+		return userVo;
+	}
+	
+	
 	public UserVo get(String email, String password) throws UserDaoException {
 		Map<String, String> map = new HashMap<>();
 		map.put("email", email);
