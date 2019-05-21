@@ -30,41 +30,27 @@
 						<th>작성일</th>
 						<th>&nbsp;</th>
 					</tr>				
-					<tr>
-						<td>3</td>
-						<td style="text-align:left; padding-left: ${20*0}px;"><a href="">세 번째 글입니다.</a></td>
-						<td>안대혁</td>
-						<td>3</td>
-						<td>2015-10-11 12:04:20</td>
-						<td><a href="" class="del">삭제</a></td>
-					</tr>
-					<tr>
-						<td>2</td>
-						<td style="text-align:left; padding-left: ${20*1}px;"><a href=""><img alt="" src="${pageContext.servletContext.contextPath }/assets/images/reply.png">두 번째 글입니다.</a></td>
-						<td>안대혁</td>
-						<td>3</td>
-						<td>2015-10-02 12:04:12</td>
-						<td><a href="" class="del">삭제</a></td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td style="text-align:left; padding-left: ${20*2}px;"><a href=""><img alt="" src="${pageContext.servletContext.contextPath }/assets/images/reply.png">첫 번째 글입니다.</a></td>
-						<td>안대혁</td>
-						<td>3</td>
-						<td>2015-09-25 07:24:32</td>
-						<td><a href="" class="del">삭제</a></td>
-					</tr>
-					<%-- <c:forEach items="${list }" var="list">
+					<c:set var='count' value='${fn:length(boardVo) }' />
+					<c:forEach items="${boardVo }" var="boardVo" varStatus="status">
 						<tr>
-							<td>1</td>
-							<td><a href="">첫 번째 글입니다.</a></td>
-							<td>안대혁</td>
-							<td>3</td>
-							<td>2015-09-25 07:24:32</td>
-							<td><a href="" class="del">삭제</a></td>
+							<td hidden="hidden"><input name="no" value="${boardVo.no }"></td>
+							<td>${count - status.index }</td>
+							<td style="text-align:left; padding-left: ${20* boardVo.depth}px;">
+								<a href="${pageContext.servletContext.contextPath }/board/view/${boardVo.no}">
+									<c:if test="${boardVo.depth !=0 }">
+										<img alt="" src="${pageContext.servletContext.contextPath }/assets/images/reply.png">
+									</c:if>
+								${boardVo.title }
+								</a>
+							</td>
+							<td>${boardVo.name }</td>
+							<td>${boardVo.count }</td>
+							<td>${boardVo.regDate }</td>
+							<td><a href="${pageContext.servletContext.contextPath }/board/delete/${boardVo.user_no}/${boardVo.no}" class="del">삭제</a></td>
 						</tr>
-					</c:forEach> --%>
+					</c:forEach>
 				</table>
+				
 				<!-- pager 추가 -->
 				<div class="pager">
 					<ul>
@@ -77,6 +63,8 @@
 						<li><a href="">▶</a></li>
 					</ul>
 				</div>		
+				
+				
 				<div class="bottom">
 					<a href="${pageContext.servletContext.contextPath }/board/writeform" id="new-book">글쓰기</a>
 				</div>				

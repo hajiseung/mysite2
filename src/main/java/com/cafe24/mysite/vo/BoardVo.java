@@ -3,9 +3,14 @@ package com.cafe24.mysite.vo;
 public class BoardVo {
 	private long no;
 	private String title;
-	private String content;
+	private String contents;
 	private String regDate;
-	private long userNo;
+	private long user_no;
+	private int group_no;
+	private int order_no;
+	private int depth;
+	private int count;
+	private String name;
 
 	public long getNo() {
 		return no;
@@ -23,12 +28,12 @@ public class BoardVo {
 		this.title = title;
 	}
 
-	public String getContent() {
-		return content;
+	public String getContents() {
+		return contents;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setContents(String contents) {
+		this.contents = contents;
 	}
 
 	public String getRegDate() {
@@ -39,18 +44,59 @@ public class BoardVo {
 		this.regDate = regDate;
 	}
 
-	public long getUserNo() {
-		return userNo;
+	public long getUser_no() {
+		return user_no;
 	}
 
-	public void setUserNo(long userNo) {
-		this.userNo = userNo;
+	public void setUser_no(long user_no) {
+		this.user_no = user_no;
+	}
+
+	public int getGroup_no() {
+		return group_no;
+	}
+
+	public void setGroup_no(int group_no) {
+		this.group_no = group_no;
+	}
+
+	public int getOrder_no() {
+		return order_no;
+	}
+
+	public void setOrder_no(int order_no) {
+		this.order_no = order_no;
+	}
+
+	public int getDepth() {
+		return depth;
+	}
+
+	public void setDepth(int depth) {
+		this.depth = depth;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@Override
 	public String toString() {
-		return "BoardVo [no=" + no + ", title=" + title + ", content=" + content + ", regDate=" + regDate + ", userNo="
-				+ userNo + "]";
+		return "BoardVo [no=" + no + ", title=" + title + ", contents=" + contents + ", regDate=" + regDate
+				+ ", user_no=" + user_no + ", group_no=" + group_no + ", order_no=" + order_no + ", depth=" + depth
+				+ ", count=" + count + ", name=" + name + "]";
 	}
 
 }

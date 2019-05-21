@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<charset>UTF-8</charset>
+			<Pattern>
+				<!-- Log Format -->
+				%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n
+			</Pattern>
+		</encoder>
+	</appender>
+
+	<appender name="fileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>/mysite-log/exception.log</file>
+
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>
+				%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n
+			</Pattern>
+		</encoder>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<FileNamePattern>/mysite-log/exception.%i.log.zip</FileNamePattern>
+			<MinIndex>1</MinIndex>
+			<MaxIndex>10</MaxIndex>
+		</rollingPolicy>
+
+		<!-- 용량이 50넘으면 rollingPolicy에서 설정한 파일name으로 압축하라 -->
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>50KB</MaxFileSize>
+		</triggeringPolicy>
+	</appender>
+
+
+	<!-- com.cafe24.logex2 아래 패키지 로그들만 \logex\logex2.log 파일에만 출력하는 로거 debug로 
+		level 설정 해놓으면 다 나옴 debug info warn error -->
+	<logger name="com.cafe24.mysite.exception" level="error" additivity="false">
+		<appender-ref ref="fileAppender" />
+		<appender-ref ref="consoleAppender" />
+	</logger>
+
+	<!-- 루트(글로벌) 로거 [특정 패키지를 지정한 로그 빼고 전부 일로 옴 ] -->
+	<root level="error">
+		<appender-ref ref="consoleAppender" />
+	</root>
+
+</configuration>

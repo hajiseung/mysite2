@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+
+	<select id="getlist" resultType="boardvo">
+		<![CDATA[
+			select a.no, a.title, a.regDate, b.name, a.group_no, a.order_no, a.depth, a.count,b.no as user_no
+			from board a, user b 
+			where a.user_no=b.no
+			order by group_no desc,order_no asc
+		]]>
+	</select>
+	<select id="checkUserForModify" resultType="boardvo" parameterType="boardvo">
+		<![CDATA[
+			select *
+			from board
+			where no = #{no}		
+		]]>
+	</select>
+	<update id="updateContentsAndTitle" parameterType="boardvo">
+		<![CDATA[
+			update board
+			set title =#{title},
+			contents=#{contents}
+			where no=#{no} 				
+		]]>
+	</update>
+	<select id="getContent" resultType="boardvo">
+		<![CDATA[
+			select no,user_no,title,contents 
+			from board 
+			where no=#{no}
+		]]>
+	</select>
+
+	<select id="boardListCount" resultType="int">
+		<![CDATA[
+			select count(*) from board;
+		]]>
+	</select>
+
+	<insert id="insert" parameterType="boardvo">
+		<![CDATA[
+				insert into board 
+				values(null,#{title },#{contents },now(),#{user_no },
+		]]>
+		<choose>
+			<when test="group_no!=0">
+				<![CDATA[
+					#{group_no },1,0,0)
+				]]>
+			</when>
+			<otherwise>
+				<![CDATA[
+					#{group_no }+1,1,0,0)
+				]]>
+			</otherwise>
+		</choose>
+	</insert>
+	
+	<update id="upCount" parameterType="boardvo">
+		<![CDATA[
+		update board
+		set count=count+1
+		where no=#{no}
+		]]>
+	</update>
+	
+	<delete id="delete" parameterType="boardvo">
+		<![CDATA[
+			delete from board
+			where no = #{no}
+		]]>
+	</delete>
+</mapper>

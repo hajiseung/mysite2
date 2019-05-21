@@ -7,6 +7,8 @@ import java.io.StringWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -15,6 +17,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+	private static final Log LOGGER = LogFactory.getLog(GlobalExceptionHandler.class);
+
 	// Exception을 처리하는 메서드다.
 	// 스프링 MVC가 일어나는곳이 아님 =>ViewResolve 타지않음
 	@ExceptionHandler(Exception.class)
@@ -23,7 +27,9 @@ public class GlobalExceptionHandler {
 //		1. 로깅
 		StringWriter errors = new StringWriter();
 		e.printStackTrace(new PrintWriter(errors));
-//		LOGGER.error(errors.toString());
+		
+		LOGGER.error(errors.toString());
+		
 		System.out.println(errors.toString());
 
 		String accept = request.getHeader("accept");
