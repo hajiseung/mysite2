@@ -26,6 +26,10 @@
 						<tr>
 							<td class="label">제목</td>
 							<td><input type="text" name="title" value=""></td>
+							<c:if test="${vo.no!=null }">
+							<td hidden="hidden"><input name="no" value="${vo.no }"></td>
+							<td hidden="hidden"><input name="no" value="${vo.order_no }"></td>
+							</c:if>
 						</tr>
 						<tr>
 							<td class="label">내용</td>

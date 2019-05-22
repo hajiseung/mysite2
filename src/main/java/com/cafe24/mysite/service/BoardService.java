@@ -22,7 +22,7 @@ public class BoardService {
 	public boolean insert(BoardVo vo) {
 		return boardDao.insert(vo);
 	}
-	
+
 	public int boardListCount() {
 		return boardDao.boardListCount();
 	}
@@ -33,7 +33,7 @@ public class BoardService {
 
 	public BoardVo getContent(BoardVo boardVo) {
 		return boardDao.getContent(boardVo);
-		
+
 	}
 
 	public BoardVo checkUserForModify(BoardVo boardVo) {
@@ -46,7 +46,23 @@ public class BoardService {
 
 	public boolean delete(BoardVo boardVo) {
 		return boardDao.delete(boardVo);
-		
+
+	}
+
+	public int maxOrderno(int group_no) {
+		return boardDao.maxOrderno(group_no);
+	}
+
+	public void updateGroupAndOrder(BoardVo vo) {
+		boardDao.updateGroupAndOrder(vo);
+	}
+
+	public List<BoardVo> changeForOrderNo(BoardVo vo) {
+		return boardDao.changeForOrderNo(vo);
+	}
+
+	public void plusOrderNo(BoardVo result) {
+		boardDao.plusOrderNo(result);
 	}
 
 }

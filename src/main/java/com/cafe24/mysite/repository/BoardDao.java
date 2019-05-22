@@ -1,11 +1,5 @@
 package com.cafe24.mysite.repository;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -103,6 +97,24 @@ public class BoardDao {
 
 	public boolean delete(BoardVo boardVo) {
 		return 1 == sqlSession.delete("board.delete", boardVo);
+	}
+
+	public int maxOrderno(int group_no) {
+		return sqlSession.selectOne("board.maxOrderno",group_no);
+	}
+
+	public void updateGroupAndOrder(BoardVo vo) {
+		sqlSession.update("board.updateGroupAndOrder",vo);
+	}
+
+	public List<BoardVo> changeForOrderNo(BoardVo vo) {
+		return sqlSession.selectList("board.changeForOrderNo", vo);
+		
+	}
+
+	public void plusOrderNo(BoardVo result) {
+		sqlSession.update("board.plusOrderNo",result);
+		
 	}
 
 }

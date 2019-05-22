@@ -39,7 +39,7 @@
 				</table>
 				
 				<div class="bottom">
-					<a href="${pageContext.servletContext.contextPath }/board/replyform/${boardVo}" >답글쓰기</a>
+					<a href="${pageContext.servletContext.contextPath }/board/replyform/${boardVo.no}/${boardVo.order_no}" >답글쓰기</a>
 					<a href="${pageContext.servletContext.contextPath }/board">글목록</a>
 					<a href="${pageContext.servletContext.contextPath }/board/modifyform/${boardVo.no}">글수정</a>
 				</div>

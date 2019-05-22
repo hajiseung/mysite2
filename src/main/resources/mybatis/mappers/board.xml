@@ -11,7 +11,8 @@
 			order by group_no desc,order_no asc
 		]]>
 	</select>
-	<select id="checkUserForModify" resultType="boardvo" parameterType="boardvo">
+	<select id="checkUserForModify" resultType="boardvo"
+		parameterType="boardvo">
 		<![CDATA[
 			select *
 			from board
@@ -28,10 +29,12 @@
 	</update>
 	<select id="getContent" resultType="boardvo">
 		<![CDATA[
-			select no,user_no,title,contents 
+			select * 
 			from board 
 			where no=#{no}
 		]]>
+		<!-- <![CDATA[ select no,user_no,title,contents from board where no=#{no} 
+			]]> -->
 	</select>
 
 	<select id="boardListCount" resultType="int">
@@ -46,9 +49,11 @@
 				values(null,#{title },#{contents },now(),#{user_no },
 		]]>
 		<choose>
-			<when test="group_no!=0">
+			<!-- <when test="group_no!=0 and order_no==0"> <![CDATA[ #{group_no }+1,1,0,0) 
+				]]> </when> -->
+			<when test="group_no>0 and order_no>0">
 				<![CDATA[
-					#{group_no },1,0,0)
+					#{group_no },#{order_no}+1,1,0)
 				]]>
 			</when>
 			<otherwise>
@@ -58,6 +63,27 @@
 			</otherwise>
 		</choose>
 	</insert>
+	
+	<select id="maxOrderno" parameterType="int" resultType="int">
+		<![CDATA[
+		select max(order_no) from board where group_no=#{group_no};
+		]]>
+	</select>
+	<select id="changeForOrderNo" parameterType="boardvo" resultType="boardvo">
+		<![CDATA[
+		select * 
+		from board 
+		where group_no=#{group_no} and order_no>=2
+		]]>
+	</select>
+	
+	<update id="plusOrderNo" parameterType="boardvo">
+		<![CDATA[
+		update board
+		set order_no=#{order_no}+1
+		where group_no=#{group_no} and order_no=#{order_no}
+		]]>
+	</update>
 	
 	<update id="upCount" parameterType="boardvo">
 		<![CDATA[

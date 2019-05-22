@@ -1,25 +1,20 @@
 package com.cafe24.mysite.repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.sql.DataSource;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StopWatch;
 
 import com.cafe24.mysite.exception.UserDaoException;
 import com.cafe24.mysite.vo.UserVo;
 
 @Repository
 public class UserDao {
-	@Autowired
-	private DataSource dataSource;
+//	@Autowired
+//	private DataSource dataSource;
 	@Autowired
 	private SqlSession sqlsession;
 //	private Connection getConnection() throws SQLException {
@@ -85,14 +80,27 @@ public class UserDao {
 		 * 
 		 * return result;
 		 */}
+
+	// MeasureExecutionTimeAspect로 AOP해줌
+//	public UserVo get(String email) throws UserDaoException {
+//		StopWatch sw = new StopWatch();
+//		sw.start();
+//		Map<String, String> map = new HashMap<>();
+//		map.put("email", email);
+//		UserVo userVo = sqlsession.selectOne("user.getByEmail", map);
+//		sw.stop();
+//		Long totalTime = sw.getTotalTimeMillis();
+//		System.out.println(totalTime);
+//		return userVo;
+//	}
+	
 	public UserVo get(String email) throws UserDaoException {
 		Map<String, String> map = new HashMap<>();
 		map.put("email", email);
 		UserVo userVo = sqlsession.selectOne("user.getByEmail", map);
 		return userVo;
 	}
-	
-	
+
 	public UserVo get(String email, String password) throws UserDaoException {
 		Map<String, String> map = new HashMap<>();
 		map.put("email", email);
