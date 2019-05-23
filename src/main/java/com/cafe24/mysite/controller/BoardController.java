@@ -1,5 +1,6 @@
 package com.cafe24.mysite.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -11,10 +12,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cafe24.mysite.service.BoardService;
 import com.cafe24.mysite.vo.BoardVo;
+import com.cafe24.mysite.vo.PageVo;
 import com.cafe24.mysite.vo.UserVo;
+import com.cafe24.security.Auth;
 
 @Controller
 @RequestMapping("/board")
@@ -23,13 +27,31 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 
-	@RequestMapping("")
-	public String list(Model model) {
-		List<BoardVo> boardVo = boardService.list();
+	@RequestMapping({ "", "?pageNo" })
+	public String list(Model model, @RequestParam(value = "pageNo", defaultValue = "1") int currentPage) {
+		PageVo pageVo = new PageVo();
+		// 전체 게시글 개수
+		pageVo.setTotalCount(boardService.boardListCount());
+		// 전체 페이지 수
+		pageVo.setTotalcountPage(pageVo.getTotalCount());
+		pageVo.setCurrentPage(currentPage);
+		List<BoardVo> boardVo = boardService.list(pageVo);
+		List<Integer> pageList = new ArrayList<Integer>();
+
+		for (int i = 1; i <= pageVo.getTotalcountPage(); i++) {
+			pageList.add(i);
+		}
+		System.out.println(pageVo);
 		model.addAttribute("boardVo", boardVo);
+		model.addAttribute("pageList", pageList);
+		model.addAttribute("pageVo", pageVo);
+		model.addAttribute("pageFirst", pageVo.getListFirst());
+		model.addAttribute("pageLast", pageVo.getListLast());
+
 		return "board/list";
 	}
 
+	@Auth
 	@RequestMapping("/writeform")
 	public String writeForm(HttpSession session, BoardVo boardvo) {
 		UserVo vo = (UserVo) session.getAttribute("authUser");
@@ -114,10 +136,14 @@ public class BoardController {
 	public String delete(HttpSession session, @PathVariable(value = "user_no") long user_no,
 			@PathVariable(value = "no") long no, BoardVo boardVo) {
 		UserVo vo = (UserVo) session.getAttribute("authUser");
-		if (vo.getNo() == user_no) {
+		if (vo == null) {
+			return "redirect:/user/login";
+		} else if (vo.getNo() == user_no) {
 			boardVo.setNo(no);
 			boardVo.setUser_no(user_no);
 			boardService.delete(boardVo);
+		} else {
+			return "redirect:/alert";
 		}
 		return "redirect:/board";
 	}

@@ -6,11 +6,14 @@
 		<typeAlias type="com.cafe24.mysite.vo.UserVo" alias="uservo" />
 		<typeAlias type="com.cafe24.mysite.vo.GuestbookVo" alias="guestbookvo" />
 		<typeAlias type="com.cafe24.mysite.vo.BoardVo" alias="boardvo" />
+		<typeAlias type="com.cafe24.mysite.vo.PageVo" alias="pagevo" />
 	</typeAliases>
+	
 	<mappers>
 		<!-- sql문에 result와 parameter을 매핑하는 파일 -->
 		<mapper resource="mybatis/mappers/user.xml" />
 		<mapper resource="mybatis/mappers/guestbook.xml" />
 		<mapper resource="mybatis/mappers/board.xml" />
+		<mapper resource="mybatis/mappers/page.xml" />
 	</mappers>
 </configuration>

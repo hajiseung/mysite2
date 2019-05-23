@@ -9,6 +9,7 @@
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
 	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
 	<!-- auto Proxy -->
 	<aop:aspectj-autoproxy />
 
@@ -42,13 +43,48 @@
 				</property>
 			</bean>
 		</mvc:message-converters>
-	</mvc:annotation-driven>
 
+		<mvc:argument-resolvers>
+			<bean
+				class="com.cafe24.security.AuthUserHandlerMethodArgumentResolver" />
+
+
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
+	<!-- Interceptors -->
+	<mvc:interceptors>
+
+		<mvc:interceptor>
+			<mvc:mapping path="/user/auth" />
+			<bean class="com.cafe24.security.AuthLoginInterceptro" />
+		</mvc:interceptor>
+
+		<mvc:interceptor>
+			<mvc:mapping path="/user/logout" />
+			<bean class="com.cafe24.security.AuthLogoutInterceptro" />
+		</mvc:interceptor>
+
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<!-- 밑에는 예외 처리 -->
+			<mvc:exclude-mapping path="/user/auth" />
+			<mvc:exclude-mapping path="/user/logout" />
+			<mvc:exclude-mapping path="/assets/**" />
+			<bean class="com.cafe24.security.AuthIntercetpor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+	<!-- <mvc:interceptors> <mvc:interceptor> <mvc:mapping path="/guestbook/**" 
+		/> <bean class="com.cafe24.mysite.interceptor.MyInterceptor02" /> </mvc:interceptor> 
+		</mvc:interceptors> -->
 	<!--2. 서블릿 커네테이너의 디폴트 서블릿 위임 핸들러 -->
 	<mvc:default-servlet-handler />
 
+	<mvc:resources mapping="/images/**"
+		location="file:/mysite-uploads/" />
+
 	<!-- 빈 설정을 annotation으로 하겠다.(@Controller에 auto scanning) -->
 	<context:annotation-config />
+
 	<!-- Controller Scanning 하는 base Package 지정 -->
 	<context:component-scan
 		base-package="com.cafe24.mysite.controller, com.cafe24.mysite.exception, scom.cafe24.mysite.controller.api" />
@@ -61,6 +97,7 @@
 		<property name="prefix" value="/WEB-INF/views/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
+
 
 
 

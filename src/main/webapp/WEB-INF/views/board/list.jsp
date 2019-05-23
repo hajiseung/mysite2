@@ -8,17 +8,19 @@
 <head>
 <title>mysite</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<link href="${pageContext.servletContext.contextPath }/assets/css/board.css" rel="stylesheet" type="text/css">
+<link
+	href="${pageContext.servletContext.contextPath }/assets/css/board.css"
+	rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div id="container">
 		<!-- Header -->
 		<%-- <jsp:include page="/WEB-INF/views/includes/header.jsp" /> --%>
-		<c:import url='/WEB-INF/views/includes/header.jsp'/>
+		<c:import url='/WEB-INF/views/includes/header.jsp' />
 		<div id="content">
 			<div id="board">
 				<form id="search_form" action="" method="post">
-					<input type="text" id="kwd" name="kwd" value="">
+					<input type="text" id="kwd" name="kwd" value=""> 
 					<input type="submit" value="찾기">
 				</form>
 				<table class="tbl-ex">
@@ -29,18 +31,17 @@
 						<th>조회수</th>
 						<th>작성일</th>
 						<th>&nbsp;</th>
-					</tr>				
+					</tr>
 					<c:set var='count' value='${fn:length(boardVo) }' />
 					<c:forEach items="${boardVo }" var="boardVo" varStatus="status">
 						<tr>
 							<td hidden="hidden"><input name="no" value="${boardVo.no }"></td>
-							<td>${count - status.index }</td>
+							<td>${(pageVo.totalCount-(5*(pageVo.currentPage-1))) - status.index }</td>
 							<td style="text-align:left; padding-left: ${20* boardVo.depth}px;">
 								<a href="${pageContext.servletContext.contextPath }/board/view/${boardVo.no}">
 									<c:if test="${boardVo.depth !=0 }">
 										<img alt="" src="${pageContext.servletContext.contextPath }/assets/images/reply.png">
-									</c:if>
-								${boardVo.title }
+									</c:if> ${boardVo.title }
 								</a>
 							</td>
 							<td>${boardVo.name }</td>
@@ -51,23 +52,38 @@
 					</c:forEach>
 				</table>
 				
-				<!-- pager 추가 -->
 				<div class="pager">
 					<ul>
-						<li><a href="">◀</a></li>
-						<li><a href="">1</a></li>
-						<li class="selected">2</li>
-						<li><a href="">3</a></li>
-						<li>4</li>
-						<li>5</li>
-						<li><a href="">▶</a></li>
+					<c:if test="${pageFirst-1 != 0 }">
+						<li><a href="${pageContext.servletContext.contextPath }/board?pageNo=${pageFirst-1 }">◀</a></li>
+					</c:if>
+					<c:if test="${pageFirst-1 == 0 }">
+						<li><a href="${pageContext.servletContext.contextPath }/board?pageNo=${pageFirst }">◀</a></li>
+					</c:if>
+					
+					<c:forEach begin="${pageFirst }" end="${pageLast }" varStatus="status">
+						<c:choose>
+							<c:when test="${pageVo.currentPage eq (pageFirst+status.count-1)}">
+									<li class="selected"><a href="${pageContext.servletContext.contextPath }/board?pageNo=${pageFirst+status.count-1}">${pageFirst+status.count-1}</a></li>
+							</c:when>
+							<c:otherwise>
+									<li><a href="${pageContext.servletContext.contextPath }/board?pageNo=${pageFirst+status.count-1}">${pageFirst+status.count-1}</a></li>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+					
+					<c:if test="${pageLast % 5 == 0 }">
+						<li><a href="${pageContext.servletContext.contextPath }/board?pageNo=${pageLast+1 }">▶</a></li>
+					</c:if>
+					<c:if test="${pageLast % 5 != 0 }">
+						<li><a href="${pageContext.servletContext.contextPath }/board?pageNo=${pageLast }">▶</a></li>
+					</c:if>
 					</ul>
-				</div>		
-				
+				</div>					
 				
 				<div class="bottom">
 					<a href="${pageContext.servletContext.contextPath }/board/writeform" id="new-book">글쓰기</a>
-				</div>				
+				</div>
 			</div>
 		</div>
 		<!-- 네비게이션 바  -->

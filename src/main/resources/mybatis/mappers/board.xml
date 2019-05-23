@@ -3,12 +3,13 @@
 
 <mapper namespace="board">
 
-	<select id="getlist" resultType="boardvo">
+	<select id="getlist" resultType="boardvo" parameterType="pagevo">
 		<![CDATA[
 			select a.no, a.title, a.regDate, b.name, a.group_no, a.order_no, a.depth, a.count,b.no as user_no
 			from board a, user b 
 			where a.user_no=b.no
-			order by group_no desc,order_no asc
+			order by group_no desc,order_no asc	
+			limit #{currentPageBoardCount}, #{COUNT_PER_BLOCK}
 		]]>
 	</select>
 	<select id="checkUserForModify" resultType="boardvo"

@@ -1,6 +1,13 @@
 package com.cafe24.mysite.vo;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.cafe24.mysite.service.PageService;
+
 public class PageVo {
+	@Autowired
+	private PageService pageService;
+
 	private static final int COUNT_PER_BLOCK = 5;
 	// 전체 게시글 갯수
 	private int totalCount;
@@ -8,6 +15,8 @@ public class PageVo {
 	// 전체 게시글/COUNT_PER_BLOCK한 페이지 갯수
 	private int totalcountPage;
 
+	// 현재 페이지에 보여질 게시글 갯수
+	private int currentPageBoardCount;
 	// 현재 페이지
 	private int currentPage;
 
@@ -16,6 +25,12 @@ public class PageVo {
 
 	// 다음 페이지 (화살표)
 	private int postPage;
+
+	// 목록의 첫번째 페이지
+	private int listFirst;
+
+	// 목록의 마지막 페이지
+	private int listLast;
 
 	public static int getCountPerBlock() {
 		return COUNT_PER_BLOCK;
@@ -46,7 +61,11 @@ public class PageVo {
 	}
 
 	public void setTotalcountPage(int totalcountPage) {
-		this.totalcountPage = totalcountPage;
+		this.totalcountPage = totalcountPage / PageVo.COUNT_PER_BLOCK;
+		if ((totalcountPage % PageVo.COUNT_PER_BLOCK) > 0
+				&& (totalcountPage % PageVo.COUNT_PER_BLOCK) < PageVo.COUNT_PER_BLOCK) {
+			this.totalcountPage++;
+		}
 	}
 
 	public void setCurrentPage(int currentPage) {
@@ -61,10 +80,47 @@ public class PageVo {
 		this.postPage = postPage;
 	}
 
+	public PageService getPageService() {
+		return pageService;
+	}
+
+	public int getCurrentPageBoardCount() {
+		return currentPageBoardCount;
+	}
+
+	public void setPageService(PageService pageService) {
+		this.pageService = pageService;
+	}
+
+	public void setCurrentPageBoardCount(int currentPageBoardCount) {
+		this.currentPageBoardCount = currentPageBoardCount;
+	}
+
+	public int getListFirst() {
+		return listFirst;
+	}
+
+	public int getListLast() {
+		return listLast;
+	}
+
+	public void setListFirst(int listFirst) {
+		this.listFirst = listFirst;
+	}
+
+	public void setListLast(int listLast) {
+		this.listLast = listLast;
+		
+		
+		
+	}
+
 	@Override
 	public String toString() {
-		return "PageVo [totalCount=" + totalCount + ", totalcountPage=" + totalcountPage + ", currentPage="
-				+ currentPage + ", prevPage=" + prevPage + ", postPage=" + postPage + "]";
+		return "PageVo [pageService=" + pageService + ", totalCount=" + totalCount + ", totalcountPage="
+				+ totalcountPage + ", currentPageBoardCount=" + currentPageBoardCount + ", currentPage=" + currentPage
+				+ ", prevPage=" + prevPage + ", postPage=" + postPage + ", listFirst=" + listFirst + ", listLast="
+				+ listLast + "]";
 	}
 
 }
