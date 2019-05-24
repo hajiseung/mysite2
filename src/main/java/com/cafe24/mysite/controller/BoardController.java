@@ -30,18 +30,21 @@ public class BoardController {
 	@RequestMapping({ "", "?pageNo" })
 	public String list(Model model, @RequestParam(value = "pageNo", defaultValue = "1") int currentPage) {
 		PageVo pageVo = new PageVo();
+
 		// 전체 게시글 개수
 		pageVo.setTotalCount(boardService.boardListCount());
+
 		// 전체 페이지 수
 		pageVo.setTotalcountPage(pageVo.getTotalCount());
 		pageVo.setCurrentPage(currentPage);
+
 		List<BoardVo> boardVo = boardService.list(pageVo);
 		List<Integer> pageList = new ArrayList<Integer>();
 
 		for (int i = 1; i <= pageVo.getTotalcountPage(); i++) {
 			pageList.add(i);
 		}
-		System.out.println(pageVo);
+
 		model.addAttribute("boardVo", boardVo);
 		model.addAttribute("pageList", pageList);
 		model.addAttribute("pageVo", pageVo);
@@ -89,7 +92,7 @@ public class BoardController {
 
 			// order_no의 갯수를 받아오자
 			List<BoardVo> list = boardService.changeForOrderNo(vo);
-			System.out.println(list);
+			System.out.println("list="+list);
 			for (BoardVo result : list) {
 				boardService.plusOrderNo(result);
 			}

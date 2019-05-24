@@ -50,13 +50,17 @@
 				values(null,#{title },#{contents },now(),#{user_no },
 		]]>
 		<choose>
-			<!-- <when test="group_no!=0 and order_no==0"> <![CDATA[ #{group_no }+1,1,0,0) 
-				]]> </when> -->
-			<when test="group_no>0 and order_no>0">
+			<when test="group_no>0 and order_no>0 and depth==0">
 				<![CDATA[
 					#{group_no },#{order_no}+1,1,0)
 				]]>
 			</when>
+			<!--다답글 보류 -->
+			<!-- <when test="group_no>0 and order_no>0 and depth>=1">
+				<![CDATA[
+					#{group_no },#{order_no}+1,#{depth}+1,0)
+				]]>
+			</when> -->
 			<otherwise>
 				<![CDATA[
 					#{group_no }+1,1,0,0)

@@ -15,7 +15,6 @@ public class BoardService {
 	private BoardDao boardDao;
 
 	public List<BoardVo> list(PageVo pageVo) {
-		System.out.println("pageVo.getCurrentPage()=" + pageVo.getCurrentPage());
 		// limit 함수 시작위치
 		if (pageVo.getCurrentPage() == 0) {
 			pageVo.setCurrentPageBoardCount(0);
@@ -34,8 +33,6 @@ public class BoardService {
 			pageVo.setListLast(pageVo.getTotalcountPage());
 		}
 
-
-		System.out.println(pageVo);
 		List<BoardVo> result = boardDao.getList(pageVo);
 		return result;
 	}
@@ -67,7 +64,6 @@ public class BoardService {
 
 	public boolean delete(BoardVo boardVo) {
 		return boardDao.delete(boardVo);
-
 	}
 
 	public int maxOrderno(int group_no) {
