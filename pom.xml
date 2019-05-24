@@ -132,6 +132,13 @@
 							<exclude>**/*.java</exclude>
 						</excludes>
 					</resource>
+					<!-- jenkins 빌드용 -->
+					<resource>
+						<directory>${project.basedir}/src/main/production/resources</directory>
+						<excludes>
+							<exclude>**/*.java</exclude>
+						</excludes>
+					</resource>
 				</resources>
 				<plugins>
 					<plugin>
