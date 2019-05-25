@@ -27,7 +27,7 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 
-	@RequestMapping({ "", "?pageNo" })
+	@RequestMapping("")
 	public String list(Model model, @RequestParam(value = "pageNo", defaultValue = "1") int currentPage) {
 		PageVo pageVo = new PageVo();
 

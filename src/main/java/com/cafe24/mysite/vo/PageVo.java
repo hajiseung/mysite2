@@ -110,9 +110,7 @@ public class PageVo {
 
 	public void setListLast(int listLast) {
 		this.listLast = listLast;
-		
-		
-		
+
 	}
 
 	@Override
