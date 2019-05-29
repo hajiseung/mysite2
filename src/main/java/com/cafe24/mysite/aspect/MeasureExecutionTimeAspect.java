@@ -10,7 +10,7 @@ import org.springframework.util.StopWatch;
 @Component
 public class MeasureExecutionTimeAspect {
             	     //* * 반환타입 전부	 //*.* 모든 클래스의 모든 메서드
-	@Around("execution(* *..repository.*.*(..)) || execution(* *..service.*.*(..))|| execution(* *..controller.*.*(..))")
+	@Around("execution(* *..repository.*.*(..)) || execution(* *..service.*.*(..)) || execution(* *..controller.*.*(..))")
 	public Object aroundAdvice(ProceedingJoinPoint pjp) throws Throwable {
 		// before
 		StopWatch sw = new StopWatch();

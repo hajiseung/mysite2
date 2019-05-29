@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -45,8 +44,6 @@
 						$('#check-button').hide();
 						$('#check-image').show();
 					}
-					
-					
 				},
 				error:function(xhr,error){
 					console.error('Error!!!:'+error);
@@ -65,7 +62,6 @@
 		<c:import url='/WEB-INF/views/includes/header.jsp' />
 		<div id="content">
 			<div id="user">
-			
 				<form:form 
 				modelAttribute="userVo"
 				id="join-form" 
@@ -85,13 +81,15 @@
 					   	</c:if>
 					</spring:hasBindErrors>
 
-					<!-- form태크를 사용하는 예제 -->
 					<label class="block-label" for="email">이메일</label>
+
+					<!-- form태크를 사용하는 예제 -->
 					<form:input path="email"/>
+					<input type="button" value="체크" id="check-button">
+					<img id="check-image" style="display: none;" src="${pageContext.servletContext.contextPath }/assets/images/check.png">
 					<!-- form태그를 사용하여 에러 출력 -->
-					<input type="button" value="체크" id="check-button"><img id="check-image" style="display: none;" src="${pageContext.servletContext.contextPath }/assets/images/check.png">
 					<p style="font-weight: bold; color: #f00; text-align: left; padding: 0 0 0 0;">
-					<form:errors path="email"/>
+						<form:errors path="email"/>
 					</p>
 					
 					<label class="block-label">패스워드</label>

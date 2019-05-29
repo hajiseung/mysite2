@@ -43,13 +43,11 @@
 
 		<mvc:argument-resolvers>
 			<bean class="com.cafe24.security.AuthUserHandlerMethodArgumentResolver" />
-
-
 		</mvc:argument-resolvers>
 	</mvc:annotation-driven>
+	
 	<!-- Interceptors -->
 	<mvc:interceptors>
-
 		<mvc:interceptor>
 			<mvc:mapping path="/user/auth" />
 			<bean class="com.cafe24.security.AuthLoginInterceptro" />
@@ -69,9 +67,11 @@
 			<bean class="com.cafe24.security.AuthIntercetpor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
+	
 	<!-- <mvc:interceptors> <mvc:interceptor> <mvc:mapping path="/guestbook/**" 
 		/> <bean class="com.cafe24.mysite.interceptor.MyInterceptor02" /> </mvc:interceptor> 
 		</mvc:interceptors> -->
+		
 	<!--2. 서블릿 커네테이너의 디폴트 서블릿 위임 핸들러 -->
 	<mvc:default-servlet-handler />
 

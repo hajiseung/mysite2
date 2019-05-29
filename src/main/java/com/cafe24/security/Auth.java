@@ -16,7 +16,7 @@ public @interface Auth {
 
 	public Role role() default Role.USER;
 
-	String value() default "USER";
-
-	int test() default 1;
+//	String value() default "USER";
+//
+//	int test() default 1;
 }

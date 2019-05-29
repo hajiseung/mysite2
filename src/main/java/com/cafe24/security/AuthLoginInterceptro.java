@@ -24,6 +24,7 @@ public class AuthLoginInterceptro extends HandlerInterceptorAdapter {
 		String password = request.getParameter("password");
 
 		// 외부에서 UserService를 가져오는 방법;
+		// 위의 Autowired도 됨
 		ApplicationContext ac = WebApplicationContextUtils.getWebApplicationContext(request.getServletContext());
 		UserService userService = ac.getBean(UserService.class);
 

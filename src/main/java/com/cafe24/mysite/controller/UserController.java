@@ -31,7 +31,7 @@ public class UserController {
 
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
 	public String join(@ModelAttribute @Valid UserVo userVo, BindingResult result, Model model) {
-
+		System.out.println(result);
 		if (result.hasErrors()) {
 //			List<ObjectError> list = result.getAllErrors();
 //			for (ObjectError error : list) {
@@ -74,7 +74,7 @@ public class UserController {
 	public String update() {
 		return "user/update";
 	}
-	
+
 	@Auth
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String update(/* @AuthUser UserVo authUser, */@ModelAttribute UserVo userVo, HttpSession session) {
