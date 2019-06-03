@@ -32,7 +32,7 @@ public class AuthLoginInterceptro extends HandlerInterceptorAdapter {
 		userVo.setEmail(email);
 		userVo.setPassword(password);
 		UserVo authUser = userService.getUser(userVo);
-
+		
 		if (authUser == null) {
 			response.sendRedirect(request.getContextPath()+"/user/login");
 		}
@@ -41,7 +41,7 @@ public class AuthLoginInterceptro extends HandlerInterceptorAdapter {
 		HttpSession session = request.getSession(true);
 		session.setAttribute("authUser", authUser);
 		response.sendRedirect(request.getContextPath());
-
+		
 		return false;
 	}
 
