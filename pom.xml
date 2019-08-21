@@ -53,6 +53,7 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 
+
 		<!-- MariaDB java Client -->
 		<dependency>
 			<groupId>org.mariadb.jdbc</groupId>

@@ -24,7 +24,6 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
-
 	<!-- Context Loader Listner -->
 	<!-- Business 객체가 들어간다. -->
 	<!-- 서비스 계층, 데이터 액세스 계층을 포함해서 웹 환경과 직접 관련이 없는 모든 빈은 여기에 등록한다. -->
